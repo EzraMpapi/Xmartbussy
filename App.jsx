@@ -17239,11 +17239,6 @@ function Benefits({ employees }) {
   );
 }
 
-nefit} />}
-    </div>
-  );
-}
-
 function BenefitFormPanel({ employees, onClose, onSubmit }) {
   const [form, setForm] = useState({ employee: employees[0]?.name || "", type: BENEFIT_TYPES[0], monthlyValue: "" });
   function set(key, val) { setForm((f) => ({ ...f, [key]: val })); }
@@ -18654,11 +18649,6 @@ function QualityControl({ workOrders }) {
   );
 }
 
-ction} />}
-    </div>
-  );
-}
-
 function QcFormPanel({ workOrders, onClose, onSubmit }) {
   const completedOrders = workOrders.filter((w) => w.status === "Completed");
   const [form, setForm] = useState({ workOrderId: completedOrders[0]?.id || "", inspector: "", result: "Pass", defectsFound: "0", notes: "" });
@@ -19960,10 +19950,8 @@ function downloadCSV(filename, rows, columns) {
       const str = typeof val === "object" ? JSON.stringify(val) : String(val);
       return '"' + str.replace(/"/g, '""') + '"';
     }).join(",")
-  ).join("
-");
-  const csv = header + "
-" + body;
+    ).join("\n");
+  const csv = header + "\n" + body;
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement("a");
@@ -20651,7 +20639,7 @@ function PnLReport({ invoices, expenses, company }) {
   );
 }
 
-not a fabricated number here.
+// not a fabricated number here.
 function BalanceSheetReport({ invoices, expenses, inventory, posTransactions, company }) {
   const assetsHook = useCompanyTable("finance_assets", financeAssetsSeed, { mapRow: mapAssetRow });
   // Real loan balances — closes the same gap section (Loans) already
@@ -20969,8 +20957,7 @@ function CashFlowReport({ invoices, expenses, posTransactions, company }) {
 // questions instead of an owner's day-to-day ones: does this business pay
 // its bills on time, is it profitable, is its revenue growing, does it
 // have real history. Nothing here is invented — every figure reuses a
-// computation already proven cor
-rect elsewhere in this build.
+// computation already proven correct elsewhere in this build.
 function BusinessCreditProfile({ invoices, expenses, company }) {
   const profile = useMemo(() => {
     let score = 0;
@@ -21239,7 +21226,7 @@ function ScheduledReports({ invoices, inventory, expensesHook, company, schedule
         </div>
       </div>
 
-      {showForm && <ScheduleFormPanel onClose={() => setShowForm(false)} onSubmit={addSch
+      {showForm && <ScheduleFormPanel onClose={() => setShowForm(false)} onSubmit={addSchedule} />} 
 function ARAgingReport({ invoices, company }) {
   const today = new Date();
   const buckets = useMemo(() => {
@@ -26498,7 +26485,7 @@ function OperationsDashboard({ inventory, workOrders, onNavigate }) {
   );
 }
 
-or that same underlying data.
+// or that same underlying data.
 function CustomKPIs({ data }) {
   const kpis = useCompanyTable("custom_kpis", customKpisSeed, { mapRow: mapCustomKpiRow });
   const { rows, setRows, loading } = kpis;
