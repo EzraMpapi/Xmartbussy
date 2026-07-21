@@ -16,7 +16,7 @@ import {
   Hash, Video, Mic, PenTool, QrCode, MapPin, EyeOff, User, ArrowRight, LogOut,
   Target, Crosshair, GitBranch, Circle, ScanText, History, Calendar, ChevronLeft, Sparkles, Zap, HeartPulse, HardHat, Fingerprint, Activity
 , PiggyBank, HandCoins, Users2, Coins, BookHeart, TreePine, Scale, CircleUserRound, BadgeDollarSign, Shield, ArrowRightLeft,
-  School, Bus, Tablets, TestTube, Building, Hotel, Bed, Car, BookMarked, CalendarDays, UserCheck, Library, NotebookPen, Clipboard, LineChart, DollarSign, BadgeCheck, Microscope, Syringe, UtensilsCrossed, ChefHat, Utensils, CookingPot, ConciergeBell, BedDouble, Key, DoorOpen, Split, MinusCircle, PlusCircle, RefreshCw, Shuffle, ArrowLeftRight, Wallet2, Coffee, Wine, ShoppingBasket, Pizza, Timer, Salad, CheckCircle, XCircle, RotateCcw, Archive, UtensilsCrossed, ChefHat, CookingPot, Moon, Sun, Sliders, SortAsc, SortDesc, CheckSquare, Undo2, BellRing, BarChart2, PieChart, BadgePercent, Calculator, FolderSync, Database, Cpu, Globe2, Languages, GanttChart, KanbanSquare, Wifi, WifiOff, RefreshCcw, PanelLeftClose, PanelLeftOpen, ArrowUpCircle, ChevronFirst, ChevronLast, ImageIcon, Palette, Save, Info} from "lucide-react";
+  School, Bus, Tablets, TestTube, Building, Hotel, Bed, Car, BookMarked, CalendarDays, UserCheck, Library, NotebookPen, Clipboard, DollarSign, BadgeCheck, Microscope, Syringe, UtensilsCrossed, ChefHat, Utensils, CookingPot, ConciergeBell, BedDouble, Key, DoorOpen, Split, MinusCircle, PlusCircle, RefreshCw, Shuffle, ArrowLeftRight, Wallet2, Coffee, Wine, ShoppingBasket, Pizza, Timer, Salad, CheckCircle, XCircle, RotateCcw, Archive, Moon, Sun, Sliders, SortAsc, SortDesc, CheckSquare, Undo2, BellRing, BarChart2, BadgePercent, Calculator, FolderSync, Database, Cpu, Globe2, Languages, GanttChart, KanbanSquare, Wifi, WifiOff, RefreshCcw, PanelLeftClose, PanelLeftOpen, ArrowUpCircle, ChevronFirst, ChevronLast, ImageIcon, Palette, Save, Info} from "lucide-react";
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
   BarChart, Bar, CartesianGrid, Cell,
@@ -2631,6 +2631,11 @@ function useSmartAlerts(data) {
 
 // Alert priority colour maps
 const ALERT_PRIORITY = {
+  critical: { bg: "#FEF2F2", border: "#FCA5A5", dot: "#EF4444", text: "#991B1B", badge: "#FEE2E2", badgeText: "#991B1B" },
+  high:     { bg: "#FFFBEB", border: "#FCD34D", dot: "#F59E0B", text: "#92400E", badge: "#FEF3C7", badgeText: "#B45309" },
+  medium:   { bg: "#EFF6FF", border: "#93C5FD", dot: "#3B82F6", text: "#1D4ED8", badge: "#DBEAFE", badgeText: "#1E40AF" },
+  low:      { bg: "#F0FDF4", border: "#86EFAC", dot: "#22C55E", text: "#15803D", badge: "#DCFCE7", badgeText: "#166534" },
+};
 
 // ── useBulkSelect — table multi-select with actions ─────────────────────────
 // Usage: const {selected,toggle,toggleAll,clearAll,isSelected,isAllSelected,count} = useBulkSelect(rows)
@@ -2695,12 +2700,6 @@ function DeltaBadge({ current, previous, format, goodWhenPositive }) {
     </span>
   );
 }
-
-  critical: { bg: "#FEF2F2", border: "#FCA5A5", dot: "#EF4444", text: "#991B1B", badge: "#FEE2E2", badgeText: "#991B1B" },
-  high:     { bg: "#FFFBEB", border: "#FCD34D", dot: "#F59E0B", text: "#92400E", badge: "#FEF3C7", badgeText: "#B45309" },
-  medium:   { bg: "#EFF6FF", border: "#93C5FD", dot: "#3B82F6", text: "#1D4ED8", badge: "#DBEAFE", badgeText: "#1E40AF" },
-  low:      { bg: "#F0FDF4", border: "#86EFAC", dot: "#22C55E", text: "#15803D", badge: "#DCFCE7", badgeText: "#166534" },
-};
 
 // ── Dark mode CSS injected into document head ─────────────────────────────
 if (typeof document !== "undefined") {
@@ -6588,7 +6587,7 @@ function Opportunities({ leads, onSelect }) {
   );
 }
 
- this is a view, not a table.
+// this is a view, not a table.
 /* ─────────────────────────── TOP BUYERS ─────────────────────────────
    Full loyalty ranking — tiers, discount rates, congratulations,
    annual product history PDF, and CSV/Excel export.
@@ -7361,8 +7360,7 @@ function Customers({ leads, invoices }) {
   );
 }
 
-t's supposed to
-// summarize.
+// t's supposed to summarize.
 function PartiesLedger({ leads, invoices, expenses, suppliers }) {
   const [filter, setFilter] = useState("all");
 
@@ -7484,7 +7482,7 @@ function PartiesLedger({ leads, invoices, expenses, suppliers }) {
   );
 }
 
-------------------------- */
+// -------------------------
 
 function Contacts() {
   const contacts = useCompanyTable("crm_contacts", contactsSeed, { order: { col: "name", ascending: true }, mapRow: mapContactRow });
@@ -8198,6 +8196,7 @@ function Sales({ invoices, inventory, subscriptionsHook, quotationsHook, current
           </p>
         </div>
         {tab !== "subscriptions" && (
+          <>
           <button
             onClick={() => setShowForm(true)}
             className="btn-primary text-white text-[13px] font-medium px-3.5 py-2 rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition-colors shrink-0"
@@ -8205,6 +8204,7 @@ function Sales({ invoices, inventory, subscriptionsHook, quotationsHook, current
             <Plus size={15} /> New {tab === "quotations" ? "Quotation" : tab === "orders" ? "Order" : "Invoice"}
           </button>
           <button onClick={() => downloadCSV("sales-" + tab, filtered, [{key:"id",label:"ID"},{key:"customer",label:"Customer"},{key:"date",label:"Date"},{key:"status",label:"Status"}])} className="flex items-center gap-1 text-[12.5px] font-medium text-slate-500 border border-slate-200 px-3 py-2 rounded-lg hover:border-[#16A34A] hover:text-[#16A34A] transition-colors"><Download size={13}/>CSV</button>
+          </>
         )}
       </div>
 
@@ -8438,9 +8438,6 @@ function DocPanel({ doc, onClose, onAdvance, onDelete, onRecordPayment, onProces
     setPayRef("");
     setShowPayLink(false);
     notify("Payment recorded · Ref: " + ref);
-  });
-    setPayOpen(false);
-    setPayAmount("");
   }
 
   return (
@@ -11929,7 +11926,7 @@ function VendorPayments({ orders, expensesHook }) {
   );
 }
 
-ather than a separate record.
+// ather than a separate record.
 function SupplierPortal({ suppliersHook, orders }) {
   const suppliers = suppliersHook.rows;
   const stats = useMemo(() => {
@@ -13119,8 +13116,6 @@ function BudgetsView({ expenses }) {
     return { name: cat.length > 12 ? cat.slice(0,12)+"…" : cat, actual:Math.round(actual), budget:limit, over:actual>limit&&limit>0 };
   }).filter(d => d.actual > 0 || d.budget > 0);
 
-  const totalBudget = budgets.rows.reduce((s,b) => s+b.monthlyLimit, 0);
-  const totalActual = expenses.filter(e => e.date >= monthStart).reduce((s,e) => s+e.amount, 0);
   const overBudgetCats = chartData.filter(d => d.over).length;
 
   return (
@@ -13238,8 +13233,7 @@ function BudgetsView({ expenses }) {
 // intelligence. Deliberately absent: inventory turnover and gross margin,
 // both of which need real COGS this schema doesn't isolate (expenses are
 // categorized, not matched to units sold) — named on-screen, not proxied
-// with a formula that wou
-ld look precise and be wrong.
+// with a formula that would look precise and be wrong.
 function FinancialRatiosView({ invoices, expenses, posTransactions, inventory }) {
   const loansHook = useCompanyTable("business_loans", [], { mapRow: (r) => ({ id: r.id, principal: Number(r.principal) || 0, repayments: (r.loan_repayments || []).map((rp) => ({ amount: Number(rp.amount) || 0 })) }), select: "*,loan_repayments(*)" });
 
@@ -13341,7 +13335,7 @@ function FinancialRatiosView({ invoices, expenses, posTransactions, inventory })
   );
 }
 
-"TIN Certificate", "Other"];
+const SCAN_DOC_TYPES = ["Receipt", "Invoice", "Tax Document", "Business License", "TIN Certificate", "Other"];
 
 function DocumentScannerView({ expensesHook }) {
   const [busy, setBusy] = useState(false);
@@ -15108,7 +15102,7 @@ function WorkingTimetable({ employees, currentUser, canManage }) {
                         }
                       </td>
                     </tr>
-    
+                  )})}
               </tbody>
             </table>
           )}
@@ -16022,8 +16016,7 @@ function Recruitment() {
       )}
 
       {selected && <CandidatePanel candidate={selected} onClose={() => setSelected(null)} onMove={moveStage} onDelete={deleteCandidate} />}
-      {showForm && <CandidateFormPanel onClose={() => setShowForm(false)} onSubmit={addCand
-idate} />}
+      {showForm && <CandidateFormPanel onClose={() => setShowForm(false)} onSubmit={addCandidate} />}
     </div>
   );
 }
@@ -16522,7 +16515,8 @@ function Attendance({ employees }) {
                   </td>
                 </tr>
               ))}
-              {!loading && rows.length === 0 && <tr><td colSpan={6}><EmptyState icon={CalendarCheck} title="No
+              {!loading && rows.length === 0 && <tr><td colSpan={6}><EmptyState icon={CalendarCheck} title="No records" /></td></tr>}
+              </tbody>
           </table>
         </div>
       </div>
